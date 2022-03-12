@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Auth Test{% endblock %}
+{% block content %}
+<script>
+
+function doSomething() {
+    var myCookie = getCookie("user");
+
+    if (myCookie == null) {
+        // do cookie doesn't exist stuff;
+        {% if not request.args.get("login") == "yes" %}
+        window.location.href = "/?login=yes";
+        {% endif %}
+    }
+    else {
+        // do cookie exists stuff
+        document.getElemntById("username").innerText = "Hello " + myCookie + ".";
+    }
+}
+    doSomething();
+</script>
+<h1>This is a test for login</h1>
+{% if request.args.get("login") == "yes" %}
+<form autocomplete="off" action="/login" method="post" id="form">
+    <label for="username">username</label>
+    <input type="text" name="username" id="username" autofocus>
+    <br></br>
+    <label for="password">password</label>
+    <input type="password" name="password" id="password">
+    <br></br>
+    <input type="submit">
+</form>
+{% else %}
+<p id="username"></p>
+<button onclick="window.location.href = 'logout?user=' + getCookie('user');">Logout</button>
+<script>
+    document.getElementById("username").innerText = "Hello " + getCookie("user") + ".";
+</script>
+{% endif %}
+{% endblock %}
