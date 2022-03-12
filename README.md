@@ -9,5 +9,5 @@ This project uses the index page for login, signup and logout operations.
    1. mode 1: login page
    2. mode 2: signup page
    3. mode 3: a user with that account exists already
-2. signedup
+2. signed up
     1. mode 1: login page with signup success message
