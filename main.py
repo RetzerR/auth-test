@@ -1,16 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 from replit import db
 app = Flask('app')
+
 
 try:
     db["users"]
 except KeyError:
     db["users"] = {}
 
-@app.route("/user/")
+@app.route("/signup/", methods=["POST"])
 def user():
-    db["users"][request.args.get("username")] = request.args.get("password")
-    return redirect("/")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    if not username in db["users"]:
+        db["users"][username] = password
+        return redirect("/?login=1&signedup=1")
+    else:
+        return redirect("/?login=3")
 
 @app.route('/')
 def hello_world():
@@ -18,7 +24,9 @@ def hello_world():
 
 @app.route("/logout/")
 def logout():
-    return render_template("logout.html", user=request.args.get("user"))
+    resp = make_response(redirect("/"))
+    resp.set_cookie("user", expires=0)
+    return resp
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -26,7 +34,9 @@ def login():
     password = request.form.get("password")
     if username in db["users"]:
         if password == db["users"][username]:
-            return render_template("login.html", user=username)
+            resp = make_response(redirect("/"))
+            resp.set_cookie("user", username)
+            return resp
         else:
             return "wrong password"
     else:

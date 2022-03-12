@@ -8,8 +8,8 @@ function doSomething() {
 
     if (myCookie == null) {
         // do cookie doesn't exist stuff;
-        {% if not request.args.get("login") == "yes" %}
-        window.location.href = "/?login=yes";
+        {% if not request.args.get("login") in ["1", "2", "3"] %}
+        window.location.href = "/?login=1";
         {% endif %}
     }
     else {
@@ -20,7 +20,11 @@ function doSomething() {
     doSomething();
 </script>
 <h1>This is a test for login</h1>
-{% if request.args.get("login") == "yes" %}
+{% if request.args.get("login") == "1" %}
+<h2>Login</h2>
+{% if request.args.get("signedup") == "1" %}
+<p>Yay your account is ready, please login!</p>
+{% endif %}
 <form autocomplete="off" action="/login" method="post" id="form">
     <label for="username">username</label>
     <input type="text" name="username" id="username" autofocus>
@@ -30,6 +34,24 @@ function doSomething() {
     <br></br>
     <input type="submit">
 </form>
+<br>
+or <a href="/?login=2">Sign Up</butaton>
+{% elif request.args.get("login") == "2" %}
+<h2>Sign Up</h2>
+<form autocomplete="off" action="/signup" method="post" id="form">
+    <label for="username">username</label>
+    <input type="text" name="username" id="username" autofocus>
+    <br></br>
+    <label for="password">password</label>
+    <input type="password" name="password" id="password">
+    <br></br>
+    <input type="submit">
+</form>
+<br>
+or <a href="/?login=1">Login</a>
+{% elif request.args.get("login") == "3" %}
+<p>Sorry, A user with that username already exists</p>
+<button onclick="window.location.href = '/?login=2';">Sign Up</button>
 {% else %}
 <p id="username"></p>
 <button onclick="window.location.href = 'logout?user=' + getCookie('user');">Logout</button>
