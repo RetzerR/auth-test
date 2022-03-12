@@ -14,3 +14,8 @@ This project uses the index page for login, signup and logout operations.
 3. response (login mode 1)
    1. mode 1: User not found
    2. mode 2: Wrong password
+ # TODO #
+ 
+ - [x] Use index page for everything
+ - [ ] Add css for project
+ - [ ] Make as a plugin for other flask apps
