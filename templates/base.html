@@ -8,6 +8,11 @@
 </head>
 <body>
     <script>
+        async function fetchAsync (url) {
+  let response = await fetch(url);
+  let data = await response.text();
+  return data;
+}
             function getCookie(name) {
     var dc = document.cookie;
     var prefix = name + "=";

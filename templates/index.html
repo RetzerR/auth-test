@@ -63,7 +63,17 @@ or <a href="/?login=1">Login</a>
 <p id="username"></p>
 <button onclick="window.location.href = 'logout';">Logout</button>
 <script>
-    document.getElementById("username").innerText = "Hello " + getCookie("user") + ".";
+    function myfunc(text) {
+        if (text != "ERROR: USER NOT FOUND")
+        {
+            document.getElementById("username").innerText = "Hello " + text + ".";
+    }
+    else {
+        document.getElementById("username").innerText = text;}
+    }
+    fetch('https://auth-test.ryderretzlaff.repl.co/username/?id=' + getCookie("user"))
+  .then(response => response.text())
+  .then(data => myfunc(data));
 </script>
 {% endif %}
 {% endblock %}
