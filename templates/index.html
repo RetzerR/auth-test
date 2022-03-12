@@ -14,6 +14,9 @@ function doSomething() {
     }
     else {
         // do cookie exists stuff
+        {% if request.args.get("login") in ["1", "2", "3"] %}
+        window.location.href = "/"
+        {% endif %}
         document.getElemntById("username").innerText = "Hello " + myCookie + ".";
     }
 }
@@ -23,7 +26,11 @@ function doSomething() {
 {% if request.args.get("login") == "1" %}
 <h2>Login</h2>
 {% if request.args.get("signedup") == "1" %}
-<p>Yay your account is ready, please login!</p>
+<p>Yay your account is ready, please login! :)</p>
+{% elif request.args.get("response") == "1" %}
+<p>Sorry, a user with that name was not found :(</p>
+{% elif request.args.get("response") == "2" %}
+<p>Sorry, wrong password :|</p>
 {% endif %}
 <form autocomplete="off" action="/login" method="post" id="form">
     <label for="username">username</label>
@@ -54,7 +61,7 @@ or <a href="/?login=1">Login</a>
 <button onclick="window.location.href = '/?login=2';">Sign Up</button>
 {% else %}
 <p id="username"></p>
-<button onclick="window.location.href = 'logout?user=' + getCookie('user');">Logout</button>
+<button onclick="window.location.href = 'logout';">Logout</button>
 <script>
     document.getElementById("username").innerText = "Hello " + getCookie("user") + ".";
 </script>

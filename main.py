@@ -38,8 +38,8 @@ def login():
             resp.set_cookie("user", username)
             return resp
         else:
-            return "wrong password"
+            return redirect("/?login=1&response=2")
     else:
-        return "no user found"
+        return redirect("/?login=1&response=1")
 
 app.run(host='0.0.0.0', port=8080)

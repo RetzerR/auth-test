@@ -11,3 +11,6 @@ This project uses the index page for login, signup and logout operations.
    3. mode 3: a user with that account exists already
 2. signed up
     1. mode 1: login page with signup success message
+3. response (login mode 1)
+   1. mode 1: User not found
+   2. mode 2: Wrong password
